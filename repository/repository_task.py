@@ -1,6 +1,7 @@
-from sqlalchemy import select, delete
+from sqlalchemy import select, delete, update
 from sqlalchemy.orm import Session
 from database import Tasks, Categories, get_db_session
+from schema import TaskSchema
 
 
 class TaskRepository:
@@ -18,24 +19,28 @@ class TaskRepository:
             tasks = session.execute(select(Tasks)).scalars().all()
         return tasks
 
-    def create_task(self, task: Tasks) -> None:
+    def create_task(self, task: TaskSchema) -> int:
+        task_model = Tasks(name=task.name, pomodoro_count=task.pomodoro_count, categories_id=task.categories_id)
         with self.db_session as session:
-            session.add(task)
+            session.add(task_model)
             session.commit()
+            return task_model.id
 
     def delete_task(self, task_id: int) -> None:
         with self.db_session as session:
             session.execute(delete(Tasks).where(Tasks.id == task_id))
             session.commit()
 
-    def get_task_by_categories(self, categories_id: str) -> list[Tasks]:
+    def get_task_by_categories(self, categories_id: int) -> list[Tasks]:
         query = (select(Tasks).join(Categories, Tasks.categories_id == Categories.id)
-                 .where(Categories.name == categories_id))
+                 .where(Categories.id == categories_id))
         with self.db_session as session:
             tasks_by_categories = session.execute(query).scalars().all()
         return tasks_by_categories
 
-
-def get_task_repository() -> TaskRepository:
-    db_session = get_db_session()
-    return TaskRepository(db_session)
+    def update_task_name(self, task_id: int, name: str) -> TaskSchema:
+        query = update(Tasks).where(Tasks.id == task_id).values(name=name).returning(Tasks.id)
+        with self.db_session as session:
+            task_id = session.execute(query).scalar_one_or_none()
+            session.commit()
+            return self.get_task(task_id)
