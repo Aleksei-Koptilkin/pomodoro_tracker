@@ -7,3 +7,7 @@ class TaskSchema(BaseModel):
     name: str
     pomodoro_count: int
     categories_id: int
+
+
+    class Config:
+        from_attributes = True

@@ -1,60 +1,70 @@
 from typing import Annotated
-from fastapi import APIRouter, status, Depends
-from schema.validation_tasks import TaskSchema
-from repository import TaskRepository
-from dependency import get_task_repository
 
+from fastapi import APIRouter, status, Depends
+
+from schema import TaskSchema
+from repository import TaskRepository, CacheRepository
+from dependency import get_task_repository, get_task_service
+from service import TaskService
 
 router = APIRouter(prefix="/task", tags=["task"])
 
 
 @router.get("/all", response_model=list[TaskSchema])
-async def tasks(task_repository: Annotated[TaskRepository, Depends(get_task_repository)]):
-    result = task_repository.get_tasks()
-    return result
+async def tasks(
+        task_service: Annotated[TaskService, Depends(get_task_service)],
+        ) -> list[TaskSchema]:
+    return task_service.get_tasks()
 
 
 @router.post("/", response_model=TaskSchema)
 async def create_task(
         task: TaskSchema,
-        task_repository: Annotated[TaskRepository, Depends(get_task_repository)]
+        task_service: Annotated[TaskService, Depends(get_task_service)]
     ):
-    task_id = task_repository.create_task(task)
-    task.id = task_id
-    return task
+    return task_service.create_task(task)
 
 
 @router.patch("/{task_id}", response_model=TaskSchema)
 async def update_task_name(
         task_id: int,
         name: str,
-        task_repository: Annotated[TaskRepository, Depends(get_task_repository)]
+        task_service: Annotated[TaskService, Depends(get_task_service)]
     ):
-    task = task_repository.update_task_name(task_id, name)
-    return task
+    return task_service.update_task_name(task_id, name)
 
 
 @router.delete("/{task_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_task(
         task_id: int,
-        task_repository: Annotated[TaskRepository, Depends(get_task_repository)]
+        task_service: Annotated[TaskService, Depends(get_task_service)]
     ):
-    task_repository.delete_task(task_id)
+    task_service.delete_task(task_id)
     return {"message": "task deleted"}
 
 
 @router.get("/{task_id}", response_model=TaskSchema)
 async def get_task(
         task_id: int,
-        task_repository: Annotated[TaskRepository, Depends(get_task_repository)]
+        task_service: Annotated[TaskService, Depends(get_task_service)]
     ):
-    task = task_repository.get_task(task_id)
-    return task
+    return task_service.get_task(task_id)
+
 
 @router.get("/tasks/categories/{categories_id}", response_model=list[TaskSchema])
-async def get_tasks_by_categories(
-        categories_id: int,
-        task_repository: Annotated[TaskRepository, Depends(get_task_repository)]
+async def get_tasks_by_category(
+        category_id: int,
+        task_service: Annotated[TaskService, Depends(get_task_service)]
     ):
-    result = task_repository.get_task_by_categories(categories_id)
-    return result
+    return task_service.get_tasks_by_category(category_id)
+
+
+@router.put("/{task_id}", response_model=TaskSchema)
+async def update_task(
+        task_id: int,
+        name: str,
+        pomodoro_count: int,
+        categories_id: int,
+        task_service: Annotated[TaskService, Depends(get_task_service)]
+    ):
+    return task_service.update_task(task_id, name, pomodoro_count, categories_id)

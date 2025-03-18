@@ -31,16 +31,24 @@ class TaskRepository:
             session.execute(delete(Tasks).where(Tasks.id == task_id))
             session.commit()
 
-    def get_task_by_categories(self, categories_id: int) -> list[Tasks]:
+    def get_tasks_by_category(self, categories_id: int) -> list[Tasks]:
         query = (select(Tasks).join(Categories, Tasks.categories_id == Categories.id)
                  .where(Categories.id == categories_id))
         with self.db_session as session:
             tasks_by_categories = session.execute(query).scalars().all()
         return tasks_by_categories
 
-    def update_task_name(self, task_id: int, name: str) -> TaskSchema:
+    def update_task_name(self, task_id: int, name: str) -> Tasks:
         query = update(Tasks).where(Tasks.id == task_id).values(name=name).returning(Tasks.id)
         with self.db_session as session:
             task_id = session.execute(query).scalar_one_or_none()
+            session.commit()
+            return self.get_task(task_id)
+
+    def update_task(self, task_id: int, name: str, pomodoro_count: int, categories_id: int) -> TaskSchema:
+        query = update(Tasks).where(Tasks.id == task_id).values(
+            name=name, pomodoro_count=pomodoro_count, categories_id=categories_id)
+        with self.db_session as session:
+            session.execute(query)
             session.commit()
             return self.get_task(task_id)
