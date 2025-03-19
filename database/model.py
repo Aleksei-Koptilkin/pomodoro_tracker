@@ -10,11 +10,11 @@ class Tasks(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
     pomodoro_count: Mapped[int]
-    categories_id: Mapped[int]
+    category_id: Mapped[int]
 
 
-class Categories(Base):
-    __tablename__ = 'Categories'
+class Category(Base):
+    __tablename__ = 'Category'
 
     id: Mapped[int] = mapped_column(primary_key=True)
     type: Mapped[str] = mapped_column(nullable=True)

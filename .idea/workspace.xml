@@ -5,24 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db507ada-7abe-4287-8e0c-8092e3d65324" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cache/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cache/accessor.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/repository/cache_task.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/service_task.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/4c049dcd-6ca4-46cd-8ece-c5b09840e864.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/4c049dcd-6ca4-46cd-8ece-c5b09840e864.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/4c049dcd-6ca4-46cd-8ece-c5b09840e864/storage_v2/_src_/database/pomodoro.aeOiIg/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/4c049dcd-6ca4-46cd-8ece-c5b09840e864/storage_v2/_src_/database/pomodoro.aeOiIg/schema/public.abK9xQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a4deec14-6eb6-4aef-b0f6-ec6023df45d6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a4deec14-6eb6-4aef-b0f6-ec6023df45d6.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dependency.py" beforeDir="false" afterPath="$PROJECT_DIR$/dependency.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/endpoint_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/endpoint_tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/repository/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/cache_task.py" beforeDir="false" afterPath="$PROJECT_DIR$/repository/cache_task.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/repository/repository_task.py" beforeDir="false" afterPath="$PROJECT_DIR$/repository/repository_task.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/schema/validation_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/schema/validation_tasks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/service_task.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/service_task.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +179,8 @@
       <workItem from="1741705281847" duration="15714000" />
       <workItem from="1742045762369" duration="8194000" />
       <workItem from="1742147084324" duration="4512000" />
-      <workItem from="1742314130528" duration="10649000" />
+      <workItem from="1742314130528" duration="12022000" />
+      <workItem from="1742398972790" duration="11035000" />
     </task>
     <servers />
   </component>
@@ -195,6 +189,16 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="docker-compose.yml" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/database/__init__.py</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/pomodoro_tracker$uvicorn_run.coverage" NAME="uvicorn_run Coverage Results" MODIFIED="1742051387639" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />

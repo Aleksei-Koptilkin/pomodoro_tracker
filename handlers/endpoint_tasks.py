@@ -40,7 +40,6 @@ async def delete_task(
         task_service: Annotated[TaskService, Depends(get_task_service)]
     ):
     task_service.delete_task(task_id)
-    return {"message": "task deleted"}
 
 
 @router.get("/{task_id}", response_model=TaskSchema)
@@ -51,7 +50,7 @@ async def get_task(
     return task_service.get_task(task_id)
 
 
-@router.get("/tasks/categories/{categories_id}", response_model=list[TaskSchema])
+@router.get("/tasks/category/{category_id}", response_model=list[TaskSchema])
 async def get_tasks_by_category(
         category_id: int,
         task_service: Annotated[TaskService, Depends(get_task_service)]
@@ -64,7 +63,7 @@ async def update_task(
         task_id: int,
         name: str,
         pomodoro_count: int,
-        categories_id: int,
+        category_id: int,
         task_service: Annotated[TaskService, Depends(get_task_service)]
     ):
-    return task_service.update_task(task_id, name, pomodoro_count, categories_id)
+    return task_service.update_task(task_id, name, pomodoro_count, category_id)

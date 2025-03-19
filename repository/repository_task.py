@@ -1,6 +1,6 @@
 from sqlalchemy import select, delete, update
 from sqlalchemy.orm import Session
-from database import Tasks, Categories, get_db_session
+from database import Tasks, Category, get_db_session
 from schema import TaskSchema
 
 
@@ -20,7 +20,7 @@ class TaskRepository:
         return tasks
 
     def create_task(self, task: TaskSchema) -> int:
-        task_model = Tasks(name=task.name, pomodoro_count=task.pomodoro_count, categories_id=task.categories_id)
+        task_model = Tasks(name=task.name, pomodoro_count=task.pomodoro_count, category_id=task.category_id)
         with self.db_session as session:
             session.add(task_model)
             session.commit()
@@ -31,12 +31,12 @@ class TaskRepository:
             session.execute(delete(Tasks).where(Tasks.id == task_id))
             session.commit()
 
-    def get_tasks_by_category(self, categories_id: int) -> list[Tasks]:
-        query = (select(Tasks).join(Categories, Tasks.categories_id == Categories.id)
-                 .where(Categories.id == categories_id))
+    def get_tasks_by_category(self, category_id: int) -> list[Tasks]:
+        query = (select(Tasks).join(Category, Tasks.category_id == Category.id)
+                 .where(Category.id == category_id))
         with self.db_session as session:
-            tasks_by_categories = session.execute(query).scalars().all()
-        return tasks_by_categories
+            tasks_by_category = session.execute(query).scalars().all()
+        return tasks_by_category
 
     def update_task_name(self, task_id: int, name: str) -> Tasks:
         query = update(Tasks).where(Tasks.id == task_id).values(name=name).returning(Tasks.id)
@@ -45,9 +45,9 @@ class TaskRepository:
             session.commit()
             return self.get_task(task_id)
 
-    def update_task(self, task_id: int, name: str, pomodoro_count: int, categories_id: int) -> TaskSchema:
+    def update_task(self, task_id: int, name: str, pomodoro_count: int, category_id: int) -> TaskSchema:
         query = update(Tasks).where(Tasks.id == task_id).values(
-            name=name, pomodoro_count=pomodoro_count, categories_id=categories_id)
+            name=name, pomodoro_count=pomodoro_count, category_id=category_id)
         with self.db_session as session:
             session.execute(query)
             session.commit()

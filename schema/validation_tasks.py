@@ -6,7 +6,7 @@ class TaskSchema(BaseModel):
     id: Optional[int] = None
     name: str
     pomodoro_count: int
-    categories_id: int
+    category_id: int
 
 
     class Config:

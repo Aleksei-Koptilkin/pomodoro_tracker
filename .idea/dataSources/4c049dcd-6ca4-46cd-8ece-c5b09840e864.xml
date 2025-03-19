@@ -3,9 +3,17 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.53">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <IntrospectionStateNumber>802</IntrospectionStateNumber>
+      <Grants>1||-9223372036854775808|c|G
+1||10|c|G
+1||10|C|G
+1||10|T|G
+4||-9223372036854775808|c|G
+4||10|c|G
+4||10|C|G
+4||10|T|G</Grants>
+      <IntrospectionStateNumber>811</IntrospectionStateNumber>
       <ServerVersion>17.4</ServerVersion>
-      <StartupTime>1742304223</StartupTime>
+      <StartupTime>1742396465</StartupTime>
       <TimeZones>true ACDT
 true ACSST
 false ACST
@@ -1399,7 +1407,7 @@ true posixrules
 13219||10|C|G
 13219||-9223372036854775808|U|G
 13219||10|U|G</Grants>
-      <IntrospectionStateNumber>802</IntrospectionStateNumber>
+      <IntrospectionStateNumber>811</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -4826,17 +4834,17 @@ true posixrules
     <schema id="265" parent="2" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>802</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2025-03-18.19:25:24</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>811</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2025-03-19.17:16:31</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>532</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
     </schema>
-    <sequence id="266" parent="265" name="Categories_id_seq">
-      <ObjectId>16394</ObjectId>
+    <sequence id="266" parent="265" name="Category_id_seq">
+      <ObjectId>16430</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
-      <StateNumber>753</StateNumber>
+      <StateNumber>810</StateNumber>
       <StoredType>integer|0s</StoredType>
       <OwnerName>postgres</OwnerName>
     </sequence>
@@ -4848,15 +4856,15 @@ true posixrules
       <StoredType>integer|0s</StoredType>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <table id="268" parent="265" name="Categories">
-      <ObjectId>16395</ObjectId>
-      <StateNumber>753</StateNumber>
+    <table id="268" parent="265" name="Category">
+      <ObjectId>16431</ObjectId>
+      <StateNumber>810</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
     <table id="269" parent="265" name="Tasks">
       <ObjectId>16404</ObjectId>
-      <StateNumber>753</StateNumber>
+      <StateNumber>810</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
@@ -4867,42 +4875,42 @@ true posixrules
       <OwnerName>postgres</OwnerName>
     </table>
     <column id="271" parent="268" name="id">
-      <DefaultExpression>nextval(&apos;&quot;Categories_id_seq&quot;&apos;::regclass)</DefaultExpression>
+      <DefaultExpression>nextval(&apos;&quot;Category_id_seq&quot;&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>753</StateNumber>
+      <StateNumber>810</StateNumber>
       <StoredType>integer|0s</StoredType>
-      <SequenceId>16394</SequenceId>
+      <SequenceId>16430</SequenceId>
       <TypeId>23</TypeId>
     </column>
     <column id="272" parent="268" name="type">
       <Position>2</Position>
-      <StateNumber>753</StateNumber>
+      <StateNumber>810</StateNumber>
       <StoredType>varchar|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="273" parent="268" name="name">
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>753</StateNumber>
+      <StateNumber>810</StateNumber>
       <StoredType>varchar|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <index id="274" parent="268" name="Categories_pkey">
+    <index id="274" parent="268" name="Category_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16401</ObjectId>
+      <ObjectId>16437</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>753</StateNumber>
+      <StateNumber>810</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="275" parent="268" name="Categories_pkey">
+    <key id="275" parent="268" name="Category_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16402</ObjectId>
+      <ObjectId>16438</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>753</StateNumber>
-      <UnderlyingIndexId>16401</UnderlyingIndexId>
+      <StateNumber>810</StateNumber>
+      <UnderlyingIndexId>16437</UnderlyingIndexId>
     </key>
     <column id="276" parent="269" name="id">
       <DefaultExpression>nextval(&apos;&quot;Tasks_id_seq&quot;&apos;::regclass)</DefaultExpression>
@@ -4927,10 +4935,9 @@ true posixrules
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="279" parent="269" name="categories_id">
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-      <StateNumber>753</StateNumber>
+    <column id="279" parent="269" name="category_id">
+      <Position>5</Position>
+      <StateNumber>810</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
