@@ -2,7 +2,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 
-db_url = "postgresql+psycopg2://postgres:password@localhost:5432/pomodoro"
+from settings import Settings
+
+
+settings = Settings()
+db_url = settings.db_url
 
 
 engine = create_engine(db_url)
