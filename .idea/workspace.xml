@@ -5,17 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db507ada-7abe-4287-8e0c-8092e3d65324" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/4c049dcd-6ca4-46cd-8ece-c5b09840e864.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/4c049dcd-6ca4-46cd-8ece-c5b09840e864.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/4c049dcd-6ca4-46cd-8ece-c5b09840e864/storage_v2/_src_/database/pomodoro.aeOiIg/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/4c049dcd-6ca4-46cd-8ece-c5b09840e864/storage_v2/_src_/database/pomodoro.aeOiIg/schema/public.abK9xQ.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a4deec14-6eb6-4aef-b0f6-ec6023df45d6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a4deec14-6eb6-4aef-b0f6-ec6023df45d6.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/endpoint_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/endpoint_tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/cache_task.py" beforeDir="false" afterPath="$PROJECT_DIR$/repository/cache_task.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/repository_task.py" beforeDir="false" afterPath="$PROJECT_DIR$/repository/repository_task.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schema/validation_tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/schema/validation_tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/service_task.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/service_task.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,33 +40,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Makefile Target.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;Makefile Target.run.executor&quot;: &quot;Run&quot;,
-    &quot;Python.run uvicorn.executor&quot;: &quot;Run&quot;,
-    &quot;Python.runuvicorn.executor&quot;: &quot;Run&quot;,
-    &quot;Python.uvicorn_run.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/aleksei/Документы/Python/FastAPI/pomodoro_tracker/run.py&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Makefile Target.Unnamed.executor": "Run",
+    "Makefile Target.run.executor": "Run",
+    "Python.run uvicorn.executor": "Run",
+    "Python.runuvicorn.executor": "Run",
+    "Python.uvicorn_run.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "refactoring/settings",
+    "last_opened_file_path": "/home/aleksei/Документы/Python/FastAPI/pomodoro_tracker/run.py",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;,
-      &quot;redis&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql",
+      "redis"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\THUNDEROBOT\Documents\Python\Project\FastAPI\pomodoro_tracker\schema" />
@@ -180,7 +172,9 @@
       <workItem from="1742045762369" duration="8194000" />
       <workItem from="1742147084324" duration="4512000" />
       <workItem from="1742314130528" duration="12022000" />
-      <workItem from="1742398972790" duration="11035000" />
+      <workItem from="1742398972790" duration="11631000" />
+      <workItem from="1742478056671" duration="664000" />
+      <workItem from="1742644722691" duration="1870000" />
     </task>
     <servers />
   </component>
