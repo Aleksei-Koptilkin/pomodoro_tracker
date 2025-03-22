@@ -1,11 +1,13 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+from settings import Settings
 
-db_url = "postgresql+psycopg2://postgres:password@localhost:5432/pomodoro"
+
+settings = Settings()
 
 
-engine = create_engine(db_url)
+engine = create_engine(settings.db_url)
 
 
 Session = sessionmaker(engine)
