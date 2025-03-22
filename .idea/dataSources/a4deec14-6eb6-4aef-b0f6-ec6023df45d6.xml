@@ -23,6 +23,5 @@
     <schema id="16" parent="1" name="8"/>
     <schema id="17" parent="1" name="9"/>
     <list id="18" parent="2" name="tasks"/>
-    <list id="19" parent="2" name="tasks_by_category4"/>
   </database-model>
 </dataSource>
