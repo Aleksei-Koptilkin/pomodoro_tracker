@@ -25,3 +25,8 @@ class UserRepository:
         query = select(UserProfile).where(UserProfile.id == id)
         with self. db_session as session:
             return session.execute(query).scalar_one_or_none()
+
+    def get_user_by_username(self, username: str) -> UserProfile:
+        query = select(UserProfile).where(UserProfile.username == username)
+        with self.db_session as session:
+            return session.execute(query).scalar_one_or_none()
