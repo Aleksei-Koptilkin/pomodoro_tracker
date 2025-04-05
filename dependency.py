@@ -29,11 +29,11 @@ def get_user_repository() -> UserRepository:
     return UserRepository(db_session=db_session)
 
 
-def get_user_service() -> UserService:
-    user_repository = get_user_repository()
-    return UserService(user_repository=user_repository)
-
-
 def get_auth_service() -> AuthService:
     user_repository = get_user_repository()
     return AuthService(user_repository=user_repository)
+
+
+def get_user_service() -> UserService:
+    user_repository = get_user_repository()
+    return UserService(user_repository=user_repository, auth_service=get_auth_service())
