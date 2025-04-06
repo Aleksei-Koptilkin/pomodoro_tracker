@@ -4,7 +4,7 @@ from fastapi import APIRouter, status, Depends
 
 from schema import TaskSchema
 from repository import TaskRepository, CacheRepository
-from dependency import get_task_repository, get_task_service
+from dependency import get_task_repository, get_task_service, get_request_user_id
 from service import TaskService
 
 router = APIRouter(prefix="/task", tags=["task"])
@@ -20,7 +20,8 @@ async def tasks(
 @router.post("/", response_model=TaskSchema)
 async def create_task(
         task: TaskSchema,
-        task_service: Annotated[TaskService, Depends(get_task_service)]
+        task_service: Annotated[TaskService, Depends(get_task_service)],
+        user_id: int = Depends(get_request_user_id)
     ):
     return task_service.create_task(task)
 

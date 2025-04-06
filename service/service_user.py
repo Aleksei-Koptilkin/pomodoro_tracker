@@ -15,5 +15,5 @@ class UserService:
 
     def create_user(self, username: str, password: str) -> UserLoginSchema:
         user = self.user_repository.create_user(username=username, password=password)
-        access_token = self.auth_service.get_user_access_token()
+        access_token = self.auth_service.get_user_access_token(user.id)
         return UserLoginSchema(id=user.id, access_token=access_token)

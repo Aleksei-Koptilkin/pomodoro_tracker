@@ -3,6 +3,7 @@ import datetime
 
 from jose import jwt
 
+from settings import Settings
 from database import UserProfile
 from exception import UserNotFoundException, UserNotCorrectPasswordException
 from repository import UserRepository
@@ -12,6 +13,7 @@ from schema import UserLoginSchema
 @dataclass
 class AuthService:
     user_repository: UserRepository
+    settings: Settings
 
     @staticmethod
     def _validate_auth_user(user: UserProfile, password: str) -> None:
@@ -28,5 +30,12 @@ class AuthService:
 
     def get_user_access_token(self, user_id: int) -> str:
         expires_date_unix = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=1)).timestamp()
-        token = jwt.encode({'user_id': user_id, 'expire': expires_date_unix}, 'secret', algorithm='HS256')
+        token = jwt.encode(
+            {'user_id': user_id, 'expire': expires_date_unix},
+            self.settings.JWT_SECRET_KEY,
+            algorithm=self.settings.JWT_ENCODE_ALGORITHM)
         return token
+
+    def get_user_id_from_access_token(self, token: str) -> int:
+        payload = jwt.decode(token, self.settings.JWT_SECRET_KEY, algorithms=[self.settings.JWT_ENCODE_ALGORITHM])
+        return payload['user_id']
