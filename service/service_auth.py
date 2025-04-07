@@ -1,11 +1,12 @@
 from dataclasses import dataclass
 import datetime
 
-from jose import jwt
+from jose import jwt, JWTError
 
 from settings import Settings
 from database import UserProfile
-from exception import UserNotFoundException, UserNotCorrectPasswordException
+from exception import (UserNotFoundException, UserNotCorrectPasswordException,
+                       TokenNotCorrectException, TokenExpiredException)
 from repository import UserRepository
 from schema import UserLoginSchema
 
@@ -37,5 +38,10 @@ class AuthService:
         return token
 
     def get_user_id_from_access_token(self, token: str) -> int:
-        payload = jwt.decode(token, self.settings.JWT_SECRET_KEY, algorithms=[self.settings.JWT_ENCODE_ALGORITHM])
+        try:
+            payload = jwt.decode(token, self.settings.JWT_SECRET_KEY, algorithms=[self.settings.JWT_ENCODE_ALGORITHM])
+            if payload['expire'] < datetime.datetime.now().timestamp():
+                raise TokenExpiredException
+        except JWTError:
+            raise TokenNotCorrectException
         return payload['user_id']

@@ -1,7 +1,8 @@
 import redis
-from fastapi import Depends, Request, security, Security
+from fastapi import Depends, Request, security, Security, HTTPException
 from sqlalchemy.orm import Session
 
+from exception import TokenExpiredException, TokenNotCorrectException
 from repository import TaskRepository, CacheRepository, UserRepository
 from database import get_db_session
 from cache import get_redis_connection
@@ -48,5 +49,10 @@ def get_request_user_id(
         auth_service: AuthService = Depends(get_auth_service),
         token: security.http.HTTPAuthorizationCredentials = Security(reusable_oauth2)
     ) -> int:
-    user_id = auth_service.get_user_id_from_access_token(token.credentials)
+    try:
+        user_id = auth_service.get_user_id_from_access_token(token.credentials)
+    except TokenExpiredException as e:
+        raise HTTPException(status_code=401, detail=e.detail)
+    except TokenNotCorrectException as e:
+        raise HTTPException(status_code=401, detail=e.detail)
     return user_id
