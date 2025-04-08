@@ -9,7 +9,7 @@ class CacheRepository:
     def __init__(self, redis_connection: Redis):
         self.redis_connection = redis_connection
 
-    def get_tasks(self, key_name) -> list[TaskSchema]:
+    def get_tasks(self, key_name: str) -> list[TaskSchema]:
         with self.redis_connection as redis:
             tasks_json = redis.lrange(key_name, 0, -1)
             tasks_pydantic_model = [TaskSchema.model_validate(json.loads(task_json)) for task_json in tasks_json]
