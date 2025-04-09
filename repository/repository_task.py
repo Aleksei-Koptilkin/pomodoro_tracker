@@ -1,6 +1,7 @@
 from sqlalchemy import select, delete, update
 from sqlalchemy.orm import Session
 from database import Tasks, Category, get_db_session
+from exception import TaskNotFoundException
 from schema import TaskSchema, CreateTaskSchema
 
 

@@ -20,3 +20,7 @@ class TaskNotFoundException(Exception):
 
 class NoTasksThisCategoryException(Exception):
     detail = "No tasks in this category"
+
+
+class NoTasksForUserException(Exception):
+    detail = "No tasks for this user"

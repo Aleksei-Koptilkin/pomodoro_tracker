@@ -1,7 +1,8 @@
 from typing import Annotated
 
-from fastapi import APIRouter, status, Depends
+from fastapi import APIRouter, status, Depends, HTTPException
 
+from exception import NoTasksForUserException, TaskNotFoundException, NoTasksThisCategoryException
 from schema import TaskSchema, CreateTaskSchema
 from repository import TaskRepository, CacheRepository
 from dependency import get_task_repository, get_task_service, get_request_user_id
@@ -15,7 +16,13 @@ async def tasks(
         task_service: Annotated[TaskService, Depends(get_task_service)],
         user_id: int = Depends(get_request_user_id)
         ) -> list[TaskSchema]:
-    return task_service.get_tasks(user_id)
+    try:
+        return task_service.get_tasks(user_id)
+    except NoTasksForUserException as e:
+        raise HTTPException(
+            status_code=status.HTTP_204_NO_CONTENT,
+            detail=e.detail
+        )
 
 
 @router.post("/", response_model=TaskSchema)
@@ -34,7 +41,13 @@ async def update_task_name(
         task_service: Annotated[TaskService, Depends(get_task_service)],
         user_id: int = Depends(get_request_user_id)
     ):
-    return task_service.update_task_name(task_id, name, user_id)
+    try:
+        return task_service.update_task_name(task_id, name, user_id)
+    except TaskNotFoundException as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=e.detail
+        )
 
 
 @router.delete("/{task_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -43,7 +56,13 @@ async def delete_task(
         task_service: Annotated[TaskService, Depends(get_task_service)],
         user_id: int = Depends(get_request_user_id)
     ):
-    task_service.delete_task(task_id, user_id)
+    try:
+        task_service.delete_task(task_id, user_id)
+    except TaskNotFoundException as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=e.detail
+        )
 
 
 @router.get("/{task_id}", response_model=TaskSchema)
@@ -52,7 +71,13 @@ async def get_task(
         task_service: Annotated[TaskService, Depends(get_task_service)],
         user_id: int = Depends(get_request_user_id)
     ):
-    return task_service.get_task(task_id, user_id)
+    try:
+        return task_service.get_task(task_id, user_id)
+    except TaskNotFoundException as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=e.detail
+        )
 
 
 @router.get("/tasks/category/{category_id}", response_model=list[TaskSchema])
@@ -61,7 +86,13 @@ async def get_tasks_by_category(
         task_service: Annotated[TaskService, Depends(get_task_service)],
         user_id: int = Depends(get_request_user_id)
     ):
-    return task_service.get_tasks_by_category(category_id, user_id)
+    try:
+        return task_service.get_tasks_by_category(category_id, user_id)
+    except NoTasksThisCategoryException as e:
+        raise HTTPException(
+            status_code=status.HTTP_204_NO_CONTENT,
+            detail=e.detail
+        )
 
 
 @router.put("/{task_id}", response_model=TaskSchema)
@@ -70,4 +101,10 @@ async def update_task(
         task_service: Annotated[TaskService, Depends(get_task_service)],
         user_id: int = Depends(get_request_user_id)
     ):
-    return task_service.update_task(task, user_id)
+    try:
+        return task_service.update_task(task, user_id)
+    except TaskNotFoundException as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=e.detail
+        )
