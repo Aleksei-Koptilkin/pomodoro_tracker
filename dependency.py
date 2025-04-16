@@ -2,6 +2,7 @@ import redis
 from fastapi import Depends, Request, security, Security, HTTPException
 from sqlalchemy.orm import Session
 
+from client import GoogleClient
 from exception import TokenExpiredException, TokenNotCorrectException
 from repository import TaskRepository, CacheRepository, UserRepository
 from database import get_db_session
@@ -33,8 +34,13 @@ def get_user_repository() -> UserRepository:
 
 def get_auth_service() -> AuthService:
     user_repository = get_user_repository()
+    google_client = get_google_client()
     settings = Settings()
-    return AuthService(user_repository=user_repository, settings=settings)
+    return AuthService(
+        user_repository=user_repository,
+        google_client=google_client,
+        settings=settings,
+    )
 
 
 def get_user_service() -> UserService:
@@ -56,3 +62,7 @@ def get_request_user_id(
     except TokenNotCorrectException as e:
         raise HTTPException(status_code=401, detail=e.detail)
     return user_id
+
+
+def get_google_client() -> GoogleClient:
+    return GoogleClient(settings=Settings())

@@ -3,6 +3,7 @@ import datetime
 
 from jose import jwt, JWTError
 
+from client import GoogleClient
 from settings import Settings
 from database import UserProfile
 from exception import (UserNotFoundException, UserNotCorrectPasswordException,
@@ -14,6 +15,7 @@ from schema import UserLoginSchema
 @dataclass
 class AuthService:
     user_repository: UserRepository
+    google_client: GoogleClient
     settings: Settings
 
     @staticmethod
@@ -45,3 +47,10 @@ class AuthService:
         except JWTError:
             raise TokenNotCorrectException
         return payload['user_id']
+
+    def google_redirect(self):
+        return self.settings.google_redirect_url
+
+    def google_auth(self, code: str):
+        user_google_data = self.google_client.get_user_info(code=code)
+        print(user_google_data)
