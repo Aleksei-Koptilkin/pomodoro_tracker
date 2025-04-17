@@ -9,7 +9,7 @@ from database import UserProfile
 from exception import (UserNotFoundException, UserNotCorrectPasswordException,
                        TokenNotCorrectException, TokenExpiredException)
 from repository import UserRepository
-from schema import UserLoginSchema
+from schema import UserLoginSchema, UserCreateSchema
 
 
 @dataclass
@@ -53,4 +53,17 @@ class AuthService:
 
     def google_auth(self, code: str):
         user_google_data = self.google_client.get_user_info(code=code)
-        print(user_google_data)
+
+        if user:= self.user_repository.get_google_user(email=user_google_data.email):
+            access_token = self.get_user_access_token(user.id)
+            return UserLoginSchema(id=user.id, access_token=access_token)
+
+        user_create_schema = UserCreateSchema(
+            email=user_google_data.email,
+            name=user_google_data.name,
+            given_name=user_google_data.given_name,
+            family_name=user_google_data.family_name
+        )
+        created_user = self.user_repository.create_user(user_create_schema)
+        access_token = self.get_user_access_token(created_user.id)
+        return UserLoginSchema(id=created_user.id, access_token=access_token)

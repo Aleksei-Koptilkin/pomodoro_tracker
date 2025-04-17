@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 import requests
 
+from schema import GoogleUserData
 from settings import Settings
 
 
@@ -8,12 +9,11 @@ from settings import Settings
 class GoogleClient:
     settings: Settings
 
-    def get_user_info(self, code: str) -> dict:
+    def get_user_info(self, code: str) -> GoogleUserData:
         access_token = self.get_user_access_token(code=code)
         user_info = requests.get('https://www.googleapis.com/oauth2/v1/userinfo',
                       headers={'Authorization': f'Bearer {access_token}'})
-        print(user_info.text)
-        return user_info.json()
+        return GoogleUserData(**user_info.json())
 
     def get_user_access_token(self, code: str) -> dict:
         data = {
