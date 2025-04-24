@@ -16,7 +16,6 @@ class UserRepository:
             username=user_create_schema.username,
             password=user_create_schema.password,
             email=user_create_schema.email,
-            name=user_create_schema.name,
             given_name=user_create_schema.given_name,
             family_name=user_create_schema.family_name,
         ).returning(UserProfile.id)
@@ -35,7 +34,7 @@ class UserRepository:
         with self.db_session as session:
             return session.execute(query).scalar_one_or_none()
 
-    def get_google_user(self, email):
+    def get_client_user(self, email):
         query = select(UserProfile).where(UserProfile.email == email)
         with self.db_session as session:
             return session.execute(query).scalar_one_or_none()

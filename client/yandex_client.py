@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 import requests
 
-from schema import GoogleUserData
+from schema import YandexUserData
 from settings import Settings
 
 
@@ -9,12 +9,12 @@ from settings import Settings
 class YandexClient:
     settings: Settings
 
-    def get_user_info(self, code: str):
+    def get_user_info(self, code: str) -> YandexUserData:
         access_token = self.get_user_access_token(code=code)
-        response = requests.get(
+        user_info = requests.get(
             'https://login.yandex.ru/info?',
             headers={'Authorization': f'Oauth {access_token}'})
-        print(response.text)
+        return YandexUserData(**user_info.json())
 
     def get_user_access_token(self, code: str) -> str:
         data ={

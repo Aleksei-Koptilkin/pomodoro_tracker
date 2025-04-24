@@ -13,6 +13,5 @@ class UserProfile(Base):
     username: Mapped[str] = mapped_column(nullable=True)
     password: Mapped[str] = mapped_column(nullable=True)
     email: Mapped[str] = mapped_column(nullable=True)
-    name: Mapped[str] = mapped_column(nullable=True)
     given_name: Mapped[str] = mapped_column(nullable=True)
     family_name: Mapped[str] = mapped_column(nullable=True)
