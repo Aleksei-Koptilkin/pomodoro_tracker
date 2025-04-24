@@ -12,4 +12,4 @@ def create_user(
         user: UserCreateSchema,
         user_service: UserService = Depends(get_user_service)
     ):
-    return user_service.create_user(username=user.username, password=user.password)
+    return user_service.create_user(user)
