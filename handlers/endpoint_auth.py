@@ -34,3 +34,16 @@ def google_auth(
         auth: AuthService = Depends(get_auth_service)
     ):
     return auth.google_auth(code=code)
+
+@router.get("/login/yandex", response_class=RedirectResponse)
+def yandex_login(auth_service: AuthService = Depends(get_auth_service)):
+    yandex_redirect_url = auth_service.yandex_redirect()
+    print(yandex_redirect_url)
+    return RedirectResponse(yandex_redirect_url)
+
+@router.get("/yandex_auth")
+def yandex_auth(
+        code: str,
+        auth: AuthService = Depends(get_auth_service)
+    ):
+    return auth.yandex_auth(code=code)

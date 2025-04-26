@@ -3,7 +3,7 @@ import datetime
 
 from jose import jwt, JWTError
 
-from client import GoogleClient
+from client import GoogleClient, YandexClient
 from settings import Settings
 from database import UserProfile
 from exception import (UserNotFoundException, UserNotCorrectPasswordException,
@@ -16,6 +16,7 @@ from schema import UserLoginSchema, UserCreateSchema
 class AuthService:
     user_repository: UserRepository
     google_client: GoogleClient
+    yandex_client: YandexClient
     settings: Settings
 
     @staticmethod
@@ -54,16 +55,33 @@ class AuthService:
     def google_auth(self, code: str):
         user_google_data = self.google_client.get_user_info(code=code)
 
-        if user:= self.user_repository.get_google_user(email=user_google_data.email):
+        if user:= self.user_repository.get_client_user(email=user_google_data.email):
             access_token = self.get_user_access_token(user.id)
             return UserLoginSchema(id=user.id, access_token=access_token)
 
         user_create_schema = UserCreateSchema(
             email=user_google_data.email,
-            name=user_google_data.name,
             given_name=user_google_data.given_name,
             family_name=user_google_data.family_name
         )
         created_user = self.user_repository.create_user(user_create_schema)
         access_token = self.get_user_access_token(created_user.id)
         return UserLoginSchema(id=created_user.id, access_token=access_token)
+
+    def yandex_redirect(self):
+        return self.settings.yandex_redirect_url
+
+    def yandex_auth(self, code: str):
+        user_yandex_data = self.yandex_client.get_user_info(code=code)
+        if user:= self.user_repository.get_client_user(email=user_yandex_data.default_email):
+            access_token = self.get_user_access_token(user.id)
+            return UserLoginSchema(id=user.id, access_token=access_token)
+        else:
+            user_create_schema = UserCreateSchema(
+                email=user_yandex_data.default_email,
+                given_name=user_yandex_data.first_name,
+                family_name=user_yandex_data.last_name
+            )
+            created_user = self.user_repository.create_user(user_create_schema)
+            access_token = self.get_user_access_token(created_user.id)
+            return UserLoginSchema(id=created_user.id, access_token=access_token)
