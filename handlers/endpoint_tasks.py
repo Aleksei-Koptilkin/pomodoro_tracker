@@ -17,7 +17,7 @@ async def tasks(
         user_id: int = Depends(get_request_user_id)
         ) -> list[TaskSchema]:
     try:
-        return task_service.get_tasks(user_id)
+        return await task_service.get_tasks(user_id)
     except NoTasksForUserException as e:
         raise HTTPException(
             status_code=status.HTTP_204_NO_CONTENT,
@@ -87,7 +87,7 @@ async def get_tasks_by_category(
         user_id: int = Depends(get_request_user_id)
     ):
     try:
-        return task_service.get_tasks_by_category(category_id, user_id)
+        return await task_service.get_tasks_by_category(category_id, user_id)
     except NoTasksThisCategoryException as e:
         raise HTTPException(
             status_code=status.HTTP_204_NO_CONTENT,
