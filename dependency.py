@@ -1,6 +1,7 @@
 import redis
+import httpx
 from fastapi import Depends, Request, security, Security, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from client import GoogleClient, YandexClient
 from exception import TokenExpiredException, TokenNotCorrectException
@@ -27,15 +28,14 @@ def get_task_service() -> TaskService:
     return TaskService(task_repository, cache_repository)
 
 
-def get_user_repository() -> UserRepository:
-    db_session = get_db_session()
-    return UserRepository(db_session=db_session)
+async def get_user_repository() -> UserRepository:
+    return UserRepository()
 
 
-def get_auth_service() -> AuthService:
-    user_repository = get_user_repository()
-    google_client = get_google_client()
-    yandex_client = get_yandex_client()
+async def get_auth_service() -> AuthService:
+    user_repository = await get_user_repository()
+    google_client = await get_google_client()
+    yandex_client = await get_yandex_client()
     settings = Settings()
     return AuthService(
         user_repository=user_repository,
@@ -45,9 +45,9 @@ def get_auth_service() -> AuthService:
     )
 
 
-def get_user_service() -> UserService:
+async def get_user_service() -> UserService:
     user_repository = get_user_repository()
-    return UserService(user_repository=user_repository, auth_service=get_auth_service())
+    return UserService(user_repository=await user_repository, auth_service=await get_auth_service())
 
 
 reusable_oauth2 = security.HTTPBearer()
@@ -66,9 +66,9 @@ def get_request_user_id(
     return user_id
 
 
-def get_google_client() -> GoogleClient:
-    return GoogleClient(settings=Settings())
+async def get_google_client() -> GoogleClient:
+    return GoogleClient(settings=Settings(), async_client=httpx.AsyncClient())
 
 
-def get_yandex_client() -> YandexClient:
-    return YandexClient(settings=Settings())
+async def get_yandex_client() -> YandexClient:
+    return YandexClient(settings=Settings(), async_client=httpx.AsyncClient())

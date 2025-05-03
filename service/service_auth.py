@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import datetime
 
 from jose import jwt, JWTError
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from client import GoogleClient, YandexClient
 from settings import Settings
@@ -26,8 +27,16 @@ class AuthService:
         if user.password != password:
             raise UserNotCorrectPasswordException
 
-    def login(self, username: str, password: str) -> UserLoginSchema:
-        user = self.user_repository.get_user_by_username(username=username)
+    async def login(
+            self,
+            username: str,
+            password: str,
+            session: AsyncSession
+    ) -> UserLoginSchema:
+        user = await self.user_repository.get_user_by_username(
+            username=username,
+            session=session
+        )
         self._validate_auth_user(user=user, password=password)
         access_token = self.get_user_access_token(user.id)
         return UserLoginSchema(id=user.id, access_token=access_token)
@@ -52,10 +61,10 @@ class AuthService:
     def google_redirect(self):
         return self.settings.google_redirect_url
 
-    def google_auth(self, code: str):
-        user_google_data = self.google_client.get_user_info(code=code)
+    async def google_auth(self, code: str, session: AsyncSession):
+        user_google_data = await self.google_client.get_user_info(code=code)
 
-        if user:= self.user_repository.get_client_user(email=user_google_data.email):
+        if user:= await self.user_repository.get_client_user(email=user_google_data.email, session=session):
             access_token = self.get_user_access_token(user.id)
             return UserLoginSchema(id=user.id, access_token=access_token)
 
@@ -64,16 +73,16 @@ class AuthService:
             given_name=user_google_data.given_name,
             family_name=user_google_data.family_name
         )
-        created_user = self.user_repository.create_user(user_create_schema)
+        created_user = await self.user_repository.create_user(user_create_schema, session=session)
         access_token = self.get_user_access_token(created_user.id)
         return UserLoginSchema(id=created_user.id, access_token=access_token)
 
     def yandex_redirect(self):
         return self.settings.yandex_redirect_url
 
-    def yandex_auth(self, code: str):
-        user_yandex_data = self.yandex_client.get_user_info(code=code)
-        if user:= self.user_repository.get_client_user(email=user_yandex_data.default_email):
+    async def yandex_auth(self, code: str, session: AsyncSession) -> UserLoginSchema:
+        user_yandex_data = await self.yandex_client.get_user_info(code=code)
+        if user:= await self.user_repository.get_client_user(email=user_yandex_data.default_email, session=session):
             access_token = self.get_user_access_token(user.id)
             return UserLoginSchema(id=user.id, access_token=access_token)
         else:
@@ -82,6 +91,6 @@ class AuthService:
                 given_name=user_yandex_data.first_name,
                 family_name=user_yandex_data.last_name
             )
-            created_user = self.user_repository.create_user(user_create_schema)
+            created_user = await self.user_repository.create_user(user_create_schema, session=session)
             access_token = self.get_user_access_token(created_user.id)
             return UserLoginSchema(id=created_user.id, access_token=access_token)
